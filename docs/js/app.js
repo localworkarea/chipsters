@@ -14,6 +14,13 @@
             document.documentElement.classList.add(className);
         }));
     }
+    function addLoadedClass() {
+        if (!document.documentElement.classList.contains("loading")) window.addEventListener("load", (function() {
+            setTimeout((function() {
+                document.documentElement.classList.add("loaded");
+            }), 0);
+        }));
+    }
     function getHash() {
         if (location.hash) return location.hash.replace("#", "");
     }
@@ -158,24 +165,28 @@
     }
     videoElement.addEventListener("click", playVideoOnce);
     document.addEventListener("DOMContentLoaded", (function() {
-        function loadVideo(video) {
+        function loadAndPlayVideo(video) {
             const source = video.querySelector("source");
             const dataSrc = video.getAttribute("data-src");
             source.setAttribute("src", dataSrc);
             video.load();
+            if (video.classList.contains("watch__bg-el")) video.play();
         }
         const observerVideo = new IntersectionObserver((entries => {
             entries.forEach((entry => {
                 if (entry.isIntersecting) {
-                    loadVideo(entry.target);
+                    loadAndPlayVideo(entry.target);
                     observerVideo.unobserve(entry.target);
                 }
             }));
         }));
-        const videoElement = document.querySelector(".watch__video-el");
-        observerVideo.observe(videoElement);
+        const videoElementThird = document.querySelector(".watch__video-el");
+        const videoElementBg = document.querySelector(".watch__bg-el");
+        observerVideo.observe(videoElementThird);
+        observerVideo.observe(videoElementBg);
     }));
     window["FLS"] = false;
     isWebp();
+    addLoadedClass();
     pageNavigation();
 })();

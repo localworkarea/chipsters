@@ -31,33 +31,34 @@ videoElement.addEventListener('click', playVideoOnce);
 
 
 document.addEventListener("DOMContentLoaded", function() {
-  // Функция для начала загрузки видео
-  function loadVideo(video) {
+  // Функция для начала загрузки и воспроизведения видео
+  function loadAndPlayVideo(video) {
     const source = video.querySelector('source');
     const dataSrc = video.getAttribute('data-src');
     source.setAttribute('src', dataSrc);
     video.load(); // Загрузить видео
+    if (video.classList.contains('watch__bg-el')) {
+      video.play(); // Воспроизвести видео
+    }
   }
   
   // Создаем новый экземпляр IntersectionObserver
   const observerVideo = new IntersectionObserver(entries => {
     entries.forEach(entry => {
-      // Если видео появилось во вьюпорте, начинаем его загрузку
+      // Если видео появилось во вьюпорте, начинаем его загрузку и воспроизведение
       if (entry.isIntersecting) {
-        loadVideo(entry.target);
-        // Отключаем наблюдение после начала загрузки
+        loadAndPlayVideo(entry.target);
+        // Отключаем наблюдение после начала загрузки и воспроизведения
         observerVideo.unobserve(entry.target);
       }
     });
   });
   
-  // Получаем элемент видео
-  const videoElement = document.querySelector('.watch__video-el');
+  // Получаем элементы видео
+  const videoElementThird = document.querySelector('.watch__video-el');
+  const videoElementBg = document.querySelector('.watch__bg-el');
   
-  // Начинаем наблюдение за элементом видео
-  observerVideo.observe(videoElement);
-
-
-
+  // Начинаем наблюдение за элементами видео
+  observerVideo.observe(videoElementThird);
+  observerVideo.observe(videoElementBg);
 });
-

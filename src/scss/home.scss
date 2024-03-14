@@ -1,10 +1,20 @@
-//====================================================================================================
+
 section {
   overflow: hidden;
   position: relative;
   min-height: 100vh;
   min-height: 100svh;
 }
+.item-packs__logo,
+.watch__logo {
+  position: absolute;
+  @include adaptiveValue("top", 22,30,0,1400,360);
+  left: 50%;
+  transform: translateX(-50%);
+  height: auto;
+  @include adaptiveValue("width", 254,142,0,1400,360);
+}
+//====================================================================================================
 .hero {
   // .hero__bg
   &__bg {
@@ -26,11 +36,9 @@ section {
   }
 }
 
-
-
-
 //====================================================================================================
 .packs {
+  background-color: white;
   display: flex;
   img {
     max-width: 100%;
@@ -89,14 +97,13 @@ section {
     @media (min-width:toEm(850.98)){
         display: none;
     }
-    @media (max-width: toEm(850.98)){
-      position: absolute;
-      top: toRem(30);
-      left: 50%;
-      transform: translateX(-50%);
-      height: auto;
-    }
-    @include adaptiveValue("width", 254,142,0,1400,360);
+    // @media (max-width: toEm(850.98)){
+      // position: absolute;
+      // top: toRem(30);
+      // left: 50%;
+      // transform: translateX(-50%);
+      // height: auto;
+    // }
 	}
 	// .item-packs__body
 	&__body {
@@ -115,7 +122,7 @@ section {
   &__img {
     position: relative;
     z-index: 7;
-    @include adaptiveValue("width", 442, 342,1,1920,1440.98);
+    // @include adaptiveValue("width", 442, 342,2,1920,1440.98);
     @include adaptiveValue("width", 342, 283,2,1440.98,850.98);
     @include adaptiveValue("width", 400, 270,3,850.98,360);
   }
@@ -131,20 +138,22 @@ section {
     &.sauce-01,
     &.sauce-02,
     &.sauce-03 {
-      @include adaptiveValue("width", 314, 214,2,1920,1440.98);
-      @include adaptiveValue("width", 214, 200,3,1440.98,850.98);
+      // @include adaptiveValue("width", 314, 214,2,1920,1440.98);
+      @include adaptiveValue("width", 214, 200,2,1440.98,850.98);
       @include adaptiveValue("width", 300, 175,3,850.98,360);
     }
     &.sauce-01,
     &.sauce-03 {
-      @media (min-width:toEm(1660.98)){
-        left: -48%;
-        bottom: -17%;
-      }
-      @media (max-width: toEm(1660.98)) and (min-width:toEm(850.98)){
+      @media (min-width:toEm(850.98)){
+        // left: -48%;
+        // bottom: -17%;
         left: -30%;
         bottom: -11%;
       }
+      // @media (max-width: toEm(1660.98)) and (min-width:toEm(850.98)){
+      //   left: -30%;
+      //   bottom: -11%;
+      // }
       @media (max-width: toEm(850.98)){
           left: -37%;
           bottom: -11%;
@@ -152,14 +161,18 @@ section {
     }
     &.sauce-02 {
       transform: scaleX(-1);
-      @media (min-width:toEm(1660.98)){
-        left: -39%;
-        top: -47%;
-      }
-      @media (max-width:toEm(1660.98)) and (min-width:toEm(850.98)){
+      // @media (min-width:toEm(1660.98)){
+      //   left: -39%;
+      //   top: -47%;
+      // }
+      @media (min-width:toEm(850.98)){
         left: -15%;
         top: -35%;
       }
+      // @media (max-width:toEm(1660.98)) and (min-width:toEm(850.98)){
+      //   left: -15%;
+      //   top: -35%;
+      // }
       @media (max-width: toEm(850.98)){
         left: -37%;
         bottom: -11%;
@@ -249,11 +262,30 @@ section {
 }
 
 
+
+
 //====================================================================================================
 .watch {
   background-color: #7BC1BF;
+  display: flex;
+  flex-direction: column;
+	// .watch__bg
+	&__bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+	}
+	// .watch__bg-el
+	&__bg-el {
+	}
+	// .watch__logo
+	&__logo {
+    z-index: 5;
+  }
   // .watch__video
   &__video {
+    z-index: 2;
+    flex: 1;
     @include adaptiveValue("margin-top", 90, 130,0,1440,360);
     @include adaptiveValue("margin-bottom", 30, 50,0,1440,360);
     @include adaptiveValue("padding-left", 120, 40,0,1440,360);
@@ -261,27 +293,71 @@ section {
   }
 	// .watch__video-wr
 	&__video-wr {
-    // @extend %responsiveVideo;
     background-color: #000;
-    @media (max-width: toEm(850.98)){
-        height: toRem(465);
-    }
 	}
   // .watch__video-el
   &__video-el {
     aspect-ratio: 1920/1080;
-    @media (max-width:$mobileSmall){
-        
-    }
+    height: 73vh;
   }
   // .watch__footer
   &__footer {
+    position: relative;
+    z-index: 3;
+    @include adaptiveValue("padding-left", 120, 24,0,1440,360);
+    @include adaptiveValue("padding-right", 120, 24,0,1440,360);
+    @include adaptiveValue("padding-bottom", 45, 20,0,1400,360);
+    @media (max-width: toEm(850.98)){
+        display: grid;
+        grid-template-columns: auto 1fr;
+        align-items: center;
+    }
   }
+	// .watch__call-to
+	&__call-to {
+    transform: skewX(-17deg);
+    width: toRem(170);
+    height: toRem(52);
+    background-color: white;
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    p {
+      font-size: toRem(25);
+      color: #EC1C2D;
+      transform: skewX(17deg);
+    }
+    @media (min-width:toEm(850.98)){
+      position: absolute;
+      top: 0;
+    }
+    @media (min-width:toEm(850.98)){
+      &::before {
+        content:'';
+        position: absolute;
+        top: 28%;
+        right: -75%;
+        width: toRem(79);
+        height: toRem(63);
+        background-image: url('../img/icons/arrow.svg');
+        background-repeat: no-repeat;
+        transform: skewX(17deg);
+      }
+    }
+  
+	}
   // .watch__social
   &__social {
-    width: fit-content;
     display: flex;
     align-items: center;
+    @include adaptiveValue("gap", 20, 11,0,1440,360);
+    @media (min-width:toEm(850.98)){
+      width: 100%;
+      justify-content: center;
+    }
+    @media (max-width: toEm(850.98)){
+      justify-content: flex-end;
+    }
   }
   // .watch__item
   &__item {
@@ -300,7 +376,7 @@ section {
     }
     img {
       border-radius: 50%;
-      @include adaptiveValue("width", 46, 23);
+      @include adaptiveValue("width", 46, 35);
       height: auto;
       transition: transform .3s;
     }
