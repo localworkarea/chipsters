@@ -5,12 +5,8 @@
 	<title>CHIPSTERS | HOME PAGE</title>
 	<meta charset="UTF-8">
 	<meta name="format-detection" content="telephone=no">
-	<style>
-		body {
-			opacity: 0;
-		}
-	</style>
-	<link rel="stylesheet" href="css/style.min.css?_v=20240314143456">
+	<!-- <style>body{opacity: 0;}</style> -->
+	<link rel="stylesheet" href="css/style.min.css?_v=20240314232159">
 	<link rel="shortcut icon" href="favicon.ico">
 	<!-- <meta name="robots" content="noindex, nofollow"> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -128,7 +124,217 @@
 			</section>
 		</main>
 	</div>
-	<script src="js/app.min.js?_v=20240314143456"></script>
+	<div id="fls-preloader">
+		<script>
+			function preloader() {
+				let preloaderImages;
+				const preloaderElement = document.querySelector('[data-preloader]');
+				if (preloaderElement) {
+					preloaderImages = preloaderElement.querySelectorAll('img');
+				} else {
+					preloaderImages = document.querySelectorAll('img');
+				}
+				const preloaderContainer = document.querySelector('#fls-preloader');
+				if (preloaderImages.length) {
+					const preloaderStyleTemplate = `
+				<style>
+					* {
+						padding: 0px;
+						margin: 0px;
+						border: 0px;
+						box-sizing: border-box;
+					}
+					body {
+						-ms-overflow-style: none;
+						scrollbar-width: none;
+					}
+					::-webkit-scrollbar {
+						display: none;
+					}
+					.fls-preloader{
+						background-color: #212121;
+						pointer-events: none;
+						z-index: 20;
+						position: fixed;
+						width: 100%;
+						height: 100%;
+						top: 0;
+						left: 0;
+						display: flex;
+						justify-content:center;
+						align-items: center;
+					}
+					.fls-preloader__body{
+						padding: 0.93rem;
+						max-width: 31.25rem;
+						display: flex;
+						flex-direction: column;
+					}
+					.loading-circle {
+					  display: block;
+					  border-left: 5px solid;
+					  border-top-left-radius: 100%;
+					  border-top: 5px solid;
+					  margin: 5px;
+					  animation-name: loader;
+					  animation-duration: 1500ms;
+					  animation-timing-function: linear;
+					  animation-delay: 0s;
+					  animation-iteration-count: infinite;
+					  animation-direction: normal;
+					  animation-fill-mode: forwards;
+					}
+
+					.sp1 {
+					  border-left-color: #F44336;
+					  border-top-color: #F44336;
+					  width: 40px;
+					  height: 40px;
+					}
+
+					.sp2 {
+					  border-left-color: #38956b;
+					  border-top-color: #38956b;
+					  width: 30px;
+					  height: 30px;
+					}
+
+					.sp3 {
+					  width: 20px;
+					  height: 20px;
+					  border-left-color: rgb(44, 111, 204);
+					  border-top-color: rgb(44, 111, 204);
+					}
+
+					@keyframes loader {
+					  0% {
+					    transform: rotate(0deg);
+					    transform-origin: right bottom;
+					  }
+					
+					  25% {
+					    transform: rotate(90deg);
+					    transform-origin: right bottom;
+					  }
+					
+					  50% {
+					    transform: rotate(180deg);
+					    transform-origin: right bottom;
+					  }
+					
+					  75% {
+					    transform: rotate(270deg);
+					    transform-origin: right bottom;
+					  }
+					
+					  100% {
+					    transform: rotate(360deg);
+					    transform-origin: right bottom;
+					  }
+					}
+					.lock body{
+						overflow: hidden;
+						touch-action: none;
+						overscroll-behavior: none;
+					}
+					.loading body>*:not(.fls-preloader){
+						opacity: 0;
+						visibility: hidden;
+					}
+					.loaded body>*:not(.fls-preloader){
+						transition: opacity 0.5s ease 0s;
+						opacity: 1;
+						visibility: visible;
+					}
+				</style>`;
+
+					document.head.insertAdjacentHTML("beforeend", preloaderStyleTemplate);
+
+					const preloaderTemplate = `
+					<div class="fls-preloader">
+						<div class="fls-preloader__body">
+							<div class="loading-container">
+								<span class="loading-circle sp1">
+									<span class="loading-circle sp2">
+										<span class="loading-circle sp3"></span>
+									</span>
+								</span>
+							</div>
+						</div>
+					</div>`;
+					document.body.insertAdjacentHTML("beforeend", preloaderTemplate);
+
+					const preloader = document.querySelector('.fls-preloader');
+					const showPecentLoad = document.querySelector('.fls-preloader__counter');
+					const showLineLoad = document.querySelector('.fls-preloader__line span');
+					const htmlDocument = document.documentElement;
+
+
+					let imagesLoadedCount = 0;
+					let counter = 0;
+					let progress = 0;
+
+
+					htmlDocument.classList.add('loading');
+					htmlDocument.classList.add('lock');
+
+					preloaderImages.forEach(preloaderImage => {
+						const imgClone = document.createElement('img');
+						if (imgClone) {
+							imgClone.onload = imageLoaded;
+							imgClone.onerror = imageLoaded;
+							if (preloaderImage.dataset.src) {
+								imgClone.src = preloaderImage.dataset.src;
+							} else {
+								imgClone.src = preloaderImage.src;
+							}
+						}
+					});
+
+					function setValueProgress(progress) {
+						if (showPecentLoad) {
+							showPecentLoad.innerText = `${progress}%`;
+						}
+						if (showLineLoad) {
+							showLineLoad.style.width = `${progress}%`;
+						}
+					}
+					if (showPecentLoad) {
+						setValueProgress(progress);
+					}
+
+					function imageLoaded() {
+						imagesLoadedCount++;
+						progress = Math.round((100 / preloaderImages.length) * imagesLoadedCount);
+						const intervalId = setInterval(() => {
+							if (counter >= progress) {
+								clearInterval(intervalId);
+							} else {
+								setValueProgress(++counter);
+							}
+							if (counter >= 100) {
+								addLoadedClass();
+							}
+						}, 10);
+					}
+
+					function addLoadedClass() {
+						htmlDocument.classList.add('loaded');
+						htmlDocument.classList.remove('lock');
+						htmlDocument.classList.remove('loading');
+						setInterval(() => {
+							preloader.remove();
+							preloaderContainer.remove();
+						}, 500);
+					}
+				} else {
+					preloaderContainer.remove();
+				}
+			}
+			preloader();
+		</script>
+	</div>
+	<script src="js/app.min.js?_v=20240314232159"></script>
 </body>
 
 </html>

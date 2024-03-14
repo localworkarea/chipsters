@@ -1,7 +1,13 @@
 <div id="fls-preloader">
 	<script>
 		function preloader() {
-			const preloaderImages = document.querySelector('[data-preloader]') ? document.querySelectorAll('[data-preloader] img') : document.querySelectorAll('img');
+			let preloaderImages;
+			const preloaderElement = document.querySelector('[data-preloader]');
+			if (preloaderElement) {
+			    preloaderImages = preloaderElement.querySelectorAll('img');
+			} else {
+			    preloaderImages = document.querySelectorAll('img');
+			}
 			const preloaderContainer = document.querySelector('#fls-preloader');
 			if (preloaderImages.length) {
 				const preloaderStyleTemplate =`
@@ -61,8 +67,8 @@
 					}
 
 					.sp2 {
-					  border-left-color: rgb(175, 191, 29);
-					  border-top-color: rgb(175, 191, 29);
+					  border-left-color: #38956b;
+					  border-top-color: #38956b;
 					  width: 30px;
 					  height: 30px;
 					}
@@ -110,7 +116,7 @@
 						visibility: hidden;
 					}
 					.loaded body>*:not(.fls-preloader){
-						transition: opacity 0.3s ease 0s;
+						transition: opacity 0.5s ease 0s;
 						opacity: 1;
 						visibility: visible;
 					}
@@ -132,37 +138,55 @@
 					</div>`;
 				document.body.insertAdjacentHTML("beforeend",preloaderTemplate);
 
-				const
-					preloader = document.querySelector('.fls-preloader'),
-					// showPecentLoad = document.querySelector('.fls-preloader__counter'),
-					// showLineLoad = document.querySelector('.fls-preloader__line span'),
-					htmlDocument = document.documentElement;
+				const preloader = document.querySelector('.fls-preloader');
+				const showPecentLoad = document.querySelector('.fls-preloader__counter');
+				const showLineLoad = document.querySelector('.fls-preloader__line span');
+				const htmlDocument = document.documentElement;
 
-				let imagesLoadedCount = counter = progress = 0;
+
+					let imagesLoadedCount = 0;
+					let counter = 0;
+					let progress = 0;
+
 				
 				htmlDocument.classList.add('loading');
 				htmlDocument.classList.add('lock');
 
-				// preloaderImages.forEach(preloaderImage => {
-				// 	const imgClone = document.createElement('img');
-				// 	if (imgClone) {
-				// 		imgClone.onload = imageLoaded;
-				// 		imgClone.onerror = imageLoaded;
-				// 		preloaderImage.dataset.src ? imgClone.src = preloaderImage.dataset.src : imgClone.src = preloaderImage.src;
-				// 	}
-				// });
-				// function setValueProgress(progress) {
-					// showPecentLoad ? showPecentLoad.innerText = `${progress}%`: null;
-					// showLineLoad ? showLineLoad.style.width = `${progress}%` : null;
-				// }
-				// showPecentLoad ? setValueProgress(progress) : null;
-
+				preloaderImages.forEach(preloaderImage => {
+					const imgClone = document.createElement('img');
+					if (imgClone) {
+					    imgClone.onload = imageLoaded;
+					    imgClone.onerror = imageLoaded;
+					    if (preloaderImage.dataset.src) {
+					        imgClone.src = preloaderImage.dataset.src;
+					    } else {
+					        imgClone.src = preloaderImage.src;
+					    }
+					}
+				});
+				function setValueProgress(progress) {
+					if (showPecentLoad) {
+					    showPecentLoad.innerText = `${progress}%`;
+					}
+					if (showLineLoad) {
+					    showLineLoad.style.width = `${progress}%`;
+					}
+				}
+				if (showPecentLoad) {
+				    setValueProgress(progress);
+				}
 				function imageLoaded() {
 					imagesLoadedCount++;
-					// progress = Math.round((100 / preloaderImages.length) * imagesLoadedCount);
+					progress = Math.round((100 / preloaderImages.length) * imagesLoadedCount);
 					const intervalId = setInterval(() => {
-						clearInterval(intervalId);
-						addLoadedClass();
+						if (counter >= progress) {
+						    clearInterval(intervalId);
+						} else {
+						    setValueProgress(++counter);
+						}
+						if (counter >= 100) {
+						    addLoadedClass();
+						}
 					}, 10);
 				}
 				function addLoadedClass() {

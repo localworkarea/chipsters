@@ -80,9 +80,6 @@ body {
 ::-webkit-scrollbar {
   display: none
 }
-body {
-  background-color: #ec1c2d
-}
 .lock body {
   overflow: hidden;
   touch-action: none;
