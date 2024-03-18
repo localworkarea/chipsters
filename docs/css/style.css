@@ -157,6 +157,9 @@ section {
   inset: 0;
   z-index: 2
 }
+.hero__apng {
+  z-index: 15
+}
 .packs {
   background-color: #fff;
   display: flex

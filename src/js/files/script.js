@@ -29,8 +29,72 @@ videoElement.addEventListener('click', playVideoOnce);
 
 
 
+// const videoElement = document.querySelector('.hero__video-el');
+// const mobSource = document.querySelector('.video-hero-mob');
+// const apngImage = document.getElementById('apng');
+
+// function setVideoSource() {
+//   const screenWidth = window.innerWidth;
+//   const screenHeight = window.innerHeight;
+
+//   if (screenWidth > screenHeight) {
+//       // Если ширина больше высоты, загружаем APNG
+//       if (!apngImage.src) {
+//           apngImage.src = apngImage.getAttribute('data-src');
+//           apngImage.style.display = 'block'; // Показываем анимированный PNG
+//           videoElement.style.display = 'none'; // Скрываем видео
+//           pauseAPNG();
+//           apngImage.addEventListener('click', playAPNG);
+//           // console.log("работает");
+//       }
+
+//   } else {
+//       // Иначе загружаем MP4
+//       if (!videoElement.src) {
+//           videoElement.src = mobSource.getAttribute('data-src');
+//           videoElement.load();
+//       }
+//       videoElement.style.display = 'block'; // Показываем видео
+//       apngImage.style.display = 'none'; // Скрываем анимированный PNG
+//       videoElement.addEventListener('click', playVideoOnce); // Добавляем обработчик для видео
+//       // console.log("mp4");
+//   }
+// }
+
+// window.addEventListener('DOMContentLoaded', setVideoSource);
+
+// function pauseAPNG() {
+//   if (apngImage.getAttribute('data-src').includes('.apng')) {
+//     var canvas = document.createElement('canvas');
+//     var context = canvas.getContext('2d');
+//     var image = new Image();
+//     image.onload = function() {
+//       canvas.width = image.width;
+//       canvas.height = image.height;
+//       context.drawImage(image, 0, 0);
+//       apngImage.src = canvas.toDataURL();
+//     };
+//     image.src = apngImage.getAttribute('data-src');
+//   }
+// }
+
+// function playAPNG() {
+//   var imageSrc = apngImage.getAttribute('data-src');
+//   if (imageSrc) {
+//     apngImage.src = imageSrc;
+//     apngImage.removeEventListener('click', playAPNG);
+//   }
+// }
+// function playVideoOnce() {
+//   videoElement.play();
+//   videoElement.removeEventListener('click', playVideoOnce);
+// }
+
+
+
 
 document.addEventListener("DOMContentLoaded", function() {
+
   // Функция для начала загрузки и воспроизведения видео
   function loadAndPlayVideo(video) {
     const source = video.querySelector('source');
@@ -62,3 +126,6 @@ document.addEventListener("DOMContentLoaded", function() {
   observerVideo.observe(videoElementThird);
   observerVideo.observe(videoElementBg);
 });
+
+
+
