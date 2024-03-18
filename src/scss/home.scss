@@ -16,6 +16,11 @@ section {
 }
 //====================================================================================================
 .hero {
+  min-height: auto !important;
+  &.mobile {
+    // min-height: 100vh !important;
+    // min-height: 100svh !important;
+  }
   // .hero__bg
   &__bg {
     position: absolute;
@@ -27,16 +32,26 @@ section {
   }
   // .hero__body
   &__body {
-    position: absolute;
+    // position: absolute;
+    position: relative;
     inset: 0;
     z-index: 2;
-  }
-    // .hero_apng
-    &__apng {
-      z-index: 15;
+    .mobile & {
+      // position: absolute;
     }
+  }
+    // // .hero_apng
+    // &__apng {
+    //   z-index: 15;
+    // }
   // .hero__video-el
   &__video-el {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    .mobile & {
+      // object-fit: contain;
+    }
   }
 }
 

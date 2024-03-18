@@ -3,6 +3,7 @@ import { isMobile } from "./functions.js";
 // Підключення списку активних модулів
 import { flsModules } from "./modules.js";
 
+const heroSection = document.querySelector('.hero');
 const videoElement = document.querySelector('.hero__video-el');
 const pcSource = document.querySelector('.video-hero-pc');
 const mobSource = document.querySelector('.video-hero-mob');
@@ -14,9 +15,11 @@ function setVideoSource() {
   if (screenWidth > screenHeight) {
     videoElement.src = pcSource.getAttribute('data-src');
     videoElement.load();
+    heroSection.classList.remove('mobile');
   } else {
     videoElement.src = mobSource.getAttribute('data-src');
     videoElement.load();
+    heroSection.classList.add('mobile');
   }
 }
 

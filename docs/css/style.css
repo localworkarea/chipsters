@@ -147,18 +147,24 @@ section {
   transform: translateX(-50%);
   height: auto
 }
+.hero {
+  min-height: auto!important
+}
 .hero__bg {
   position: absolute;
   inset: 0;
   overflow: hidden
 }
 .hero__body {
-  position: absolute;
+  position: relative;
   inset: 0;
   z-index: 2
 }
-.hero__apng {
-  z-index: 15
+.hero__video-el {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+  object-fit: cover
 }
 .packs {
   background-color: #fff;
