@@ -148,12 +148,8 @@ section {
   height: auto
 }
 .hero {
-  min-height: auto!important
-}
-.hero__bg {
-  position: absolute;
-  inset: 0;
-  overflow: hidden
+  min-height: auto!important;
+  background-color: #000
 }
 .hero__body {
   position: relative;

@@ -144,7 +144,7 @@
             }));
         }
     }), 0);
-    const heroSection = document.querySelector(".hero");
+    document.querySelector(".hero");
     const videoElement = document.querySelector(".hero__video-el");
     const pcSource = document.querySelector(".video-hero-pc");
     const mobSource = document.querySelector(".video-hero-mob");
@@ -154,11 +154,9 @@
         if (screenWidth > screenHeight) {
             videoElement.src = pcSource.getAttribute("data-src");
             videoElement.load();
-            heroSection.classList.remove("mobile");
         } else {
             videoElement.src = mobSource.getAttribute("data-src");
             videoElement.load();
-            heroSection.classList.add("mobile");
         }
     }
     window.addEventListener("DOMContentLoaded", setVideoSource);

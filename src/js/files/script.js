@@ -15,11 +15,11 @@ function setVideoSource() {
   if (screenWidth > screenHeight) {
     videoElement.src = pcSource.getAttribute('data-src');
     videoElement.load();
-    heroSection.classList.remove('mobile');
+    // heroSection.classList.remove('mobile');
   } else {
     videoElement.src = mobSource.getAttribute('data-src');
     videoElement.load();
-    heroSection.classList.add('mobile');
+    // heroSection.classList.add('mobile');
   }
 }
 
