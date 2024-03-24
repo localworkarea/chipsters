@@ -38,8 +38,8 @@ videoElement.addEventListener('click', playVideoOnce);
 //   // Функция для начала загрузки и воспроизведения видео
 //   function loadAndPlayVideo(video) {
 //     const source = video.querySelector('source');
-//     const dataSrc = video.getAttribute('data-src');
-//     source.setAttribute('src', dataSrc);
+    // const dataSrc = video.getAttribute('data-src');
+    // source.setAttribute('src', dataSrc);
 //     video.load(); // Загрузить видео
 //     if (video.classList.contains('watch__bg-el')) {
 //       video.play(); // Воспроизвести видео
@@ -74,7 +74,6 @@ document.addEventListener("DOMContentLoaded", function() {
   // Функция для начала загрузки и воспроизведения видео
   function loadAndPlayVideo(video) {
     const sources = video.querySelectorAll('source');
-    // Определяем, какой источник видео использовать в зависимости от размеров окна
     const isLandscape = window.innerWidth > window.innerHeight;
     sources.forEach(source => {
       if (isLandscape && source.classList.contains('watch-pc')) {
@@ -83,13 +82,17 @@ document.addEventListener("DOMContentLoaded", function() {
         source.setAttribute('src', source.getAttribute('data-src'));
       }
     });
-    video.load(); // Загрузить видео
-    if (video.classList.contains('watch__bg-el')) {
-      video.play(); // Воспроизвести видео
+    video.load();
+    const dataSrc = video.getAttribute('data-src');
+    if (dataSrc) {
+      video.setAttribute('src', dataSrc);
+      video.load();
+      if (video.classList.contains('watch__bg-el')) {
+        video.play();
+      }
     }
   }
   
-  // Создаем новый экземпляр IntersectionObserver
   const observerVideo = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       // Если видео появилось во вьюпорте, начинаем его загрузку и воспроизведение

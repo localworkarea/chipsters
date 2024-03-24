@@ -309,14 +309,18 @@ section {
     @include adaptiveValue("margin-bottom", 30, 50,0,1440,360);
     @include adaptiveValue("padding-left", 120, 40,0,1440,360);
     @include adaptiveValue("padding-right", 120, 40,0,1440,360);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 	// .watch__video-wr
 	&__video-wr {
+    width: fit-content;
     background-color: #000;
 	}
   // .watch__video-el
   &__video-el {
-    aspect-ratio: 1920/1080;
+    // aspect-ratio: 1920/1080;
     height: 73vh;
   }
   // .watch__footer
