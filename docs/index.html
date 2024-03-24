@@ -6,7 +6,7 @@
 	<meta charset="UTF-8">
 	<meta name="format-detection" content="telephone=no">
 	<!-- <style>body{opacity: 0;}</style> -->
-	<link rel="stylesheet" href="css/style.min.css?_v=20240319114628">
+	<link rel="stylesheet" href="css/style.min.css?_v=20240324161038">
 	<link rel="shortcut icon" href="favicon.ico">
 	<!-- <meta name="robots" content="noindex, nofollow"> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -84,8 +84,9 @@
 				<picture><source srcset="img/icons/logo.webp" type="image/webp"><img class="watch__logo" src="img/icons/logo.png" alt="logo"></picture>
 				<div class="watch__video">
 					<div class="watch__video-wr">
-						<video class="watch__video-el ibg ibg--contain" controls muted playsinline width="1162" height="609" poster="" data-src="files/hero-pc.mp4">
-							<source type="video/mp4" />
+						<video class="watch__video-el ibg ibg--contain" controls muted playsinline width="1162" height="609" poster="">
+							<source class="watch-pc" data-src="files/chipsters-pc.mp4" type="video/mp4" />
+							<source class="watch-mob" data-src="files/chpsters-mob.mp4" type="video/mp4" />
 						</video>
 					</div>
 				</div>
@@ -325,7 +326,7 @@
 			preloader();
 		</script>
 	</div>
-	<script src="js/app.min.js?_v=20240319114628"></script>
+	<script src="js/app.min.js?_v=20240324161038"></script>
 </body>
 
 </html>

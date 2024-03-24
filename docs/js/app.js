@@ -167,9 +167,11 @@
     videoElement.addEventListener("click", playVideoOnce);
     document.addEventListener("DOMContentLoaded", (function() {
         function loadAndPlayVideo(video) {
-            const source = video.querySelector("source");
-            const dataSrc = video.getAttribute("data-src");
-            source.setAttribute("src", dataSrc);
+            const sources = video.querySelectorAll("source");
+            const isLandscape = window.innerWidth > window.innerHeight;
+            sources.forEach((source => {
+                if (isLandscape && source.classList.contains("watch-pc")) source.setAttribute("src", source.getAttribute("data-src")); else if (!isLandscape && source.classList.contains("watch-mob")) source.setAttribute("src", source.getAttribute("data-src"));
+            }));
             video.load();
             if (video.classList.contains("watch__bg-el")) video.play();
         }
