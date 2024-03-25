@@ -125,40 +125,29 @@ videoElement.addEventListener('click', playVideoOnce);
 // });
 
 document.addEventListener("DOMContentLoaded", function() {
-  function loadAndPlayVideo(video) {
-    const sources = video.querySelectorAll('source');
-    const isLandscape = window.innerWidth > window.innerHeight;
-    sources.forEach(source => {
-      if (isLandscape && source.classList.contains('watch-pc')) {
-        source.setAttribute('src', source.getAttribute('data-src'));
-      } else if (!isLandscape && source.classList.contains('watch-mob')) {
-        source.setAttribute('src', source.getAttribute('data-src'));
-      }
-    });
-    video.load();
-    // const dataSrc = video.getAttribute('data-src');
-    // if (dataSrc) {
-    //   video.setAttribute('src', dataSrc);
-    //   video.load();
-    //   if (video.classList.contains('watch__bg-el')) {
-    //     video.play();
-    //   }
-    // }
+  const video = document.querySelector('.watch__video-el');
 
-    // Обработчик клика для переключения в полноэкранный режим и включения звука
-    video.addEventListener('click', function() {
-      if (video.requestFullscreen) {
-        video.requestFullscreen();
-      } else if (video.mozRequestFullScreen) {
-        video.mozRequestFullScreen();
-      } else if (video.webkitRequestFullscreen) {
-        video.webkitRequestFullscreen();
-      } else if (video.msRequestFullscreen) {
-        video.msRequestFullscreen();
-      }
-      video.muted = false;
-    });
+  function loadAndPlayVideo(video) {
+    const isLandscape = window.innerWidth > window.innerHeight;
+    const source = isLandscape ? video.querySelector('.watch-pc') : video.querySelector('.watch-mob');
+    const poster = isLandscape ? 'files/poster-pc.webp' : 'files/poster-mob.webp';
+    video.setAttribute('poster', poster);
+    source.setAttribute('src', source.getAttribute('data-src'));
+    video.load();
   }
+
+  video.addEventListener('click', function() {
+    if (video.requestFullscreen) {
+      video.requestFullscreen();
+    } else if (video.mozRequestFullScreen) {
+      video.mozRequestFullScreen();
+    } else if (video.webkitRequestFullscreen) {
+      video.webkitRequestFullscreen();
+    } else if (video.msRequestFullscreen) {
+      video.msRequestFullscreen();
+    }
+    video.muted = false;
+  });
 
   const observerVideo = new IntersectionObserver(entries => {
     entries.forEach(entry => {
@@ -169,11 +158,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   });
 
-  const videoElementThird = document.querySelector('.watch__video-el');
-  // const videoElementBg = document.querySelector('.watch__bg-el');
-
-  observerVideo.observe(videoElementThird);
-  // observerVideo.observe(videoElementBg);
+  observerVideo.observe(video);
 });
 
 

@@ -166,18 +166,19 @@
     }
     videoElement.addEventListener("click", playVideoOnce);
     document.addEventListener("DOMContentLoaded", (function() {
+        const video = document.querySelector(".watch__video-el");
         function loadAndPlayVideo(video) {
-            const sources = video.querySelectorAll("source");
             const isLandscape = window.innerWidth > window.innerHeight;
-            sources.forEach((source => {
-                if (isLandscape && source.classList.contains("watch-pc")) source.setAttribute("src", source.getAttribute("data-src")); else if (!isLandscape && source.classList.contains("watch-mob")) source.setAttribute("src", source.getAttribute("data-src"));
-            }));
+            const source = isLandscape ? video.querySelector(".watch-pc") : video.querySelector(".watch-mob");
+            const poster = isLandscape ? "files/poster-pc.webp" : "files/poster-mob.webp";
+            video.setAttribute("poster", poster);
+            source.setAttribute("src", source.getAttribute("data-src"));
             video.load();
-            video.addEventListener("click", (function() {
-                if (video.requestFullscreen) video.requestFullscreen(); else if (video.mozRequestFullScreen) video.mozRequestFullScreen(); else if (video.webkitRequestFullscreen) video.webkitRequestFullscreen(); else if (video.msRequestFullscreen) video.msRequestFullscreen();
-                video.muted = false;
-            }));
         }
+        video.addEventListener("click", (function() {
+            if (video.requestFullscreen) video.requestFullscreen(); else if (video.mozRequestFullScreen) video.mozRequestFullScreen(); else if (video.webkitRequestFullscreen) video.webkitRequestFullscreen(); else if (video.msRequestFullscreen) video.msRequestFullscreen();
+            video.muted = false;
+        }));
         const observerVideo = new IntersectionObserver((entries => {
             entries.forEach((entry => {
                 if (entry.isIntersecting) {
@@ -186,8 +187,7 @@
                 }
             }));
         }));
-        const videoElementThird = document.querySelector(".watch__video-el");
-        observerVideo.observe(videoElementThird);
+        observerVideo.observe(video);
     }));
     document.addEventListener("DOMContentLoaded", (event => {
         var video = document.querySelector(".watch__bg-el");
