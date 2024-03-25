@@ -21,6 +21,7 @@ function setVideoSource() {
     videoElement.load();
     // heroSection.classList.add('mobile');
   }
+ 
 }
 
 window.addEventListener('DOMContentLoaded', setVideoSource);
@@ -38,8 +39,8 @@ videoElement.addEventListener('click', playVideoOnce);
 //   // Функция для начала загрузки и воспроизведения видео
 //   function loadAndPlayVideo(video) {
 //     const source = video.querySelector('source');
-    // const dataSrc = video.getAttribute('data-src');
-    // source.setAttribute('src', dataSrc);
+//     const dataSrc = video.getAttribute('data-src');
+//     source.setAttribute('src', dataSrc);
 //     video.load(); // Загрузить видео
 //     if (video.classList.contains('watch__bg-el')) {
 //       video.play(); // Воспроизвести видео
@@ -69,9 +70,61 @@ videoElement.addEventListener('click', playVideoOnce);
 
 
 
-document.addEventListener("DOMContentLoaded", function() {
+// document.addEventListener("DOMContentLoaded", function() {
+//   function loadAndPlayVideo(video) {
+//     const sources = video.querySelectorAll('source');
+//     const isLandscape = window.innerWidth > window.innerHeight;
+//     sources.forEach(source => {
+//       if (isLandscape && source.classList.contains('watch-pc')) {
+//         source.setAttribute('src', source.getAttribute('data-src'));
+//       } else if (!isLandscape && source.classList.contains('watch-mob')) {
+//         source.setAttribute('src', source.getAttribute('data-src'));
+//       }
+//     });
+//     video.load();
+//     const dataSrc = video.getAttribute('data-src');
+//     if (dataSrc) {
+//       video.setAttribute('src', dataSrc);
+//       video.load();
+//       if (video.classList.contains('watch__bg-el')) {
+//         video.play();
+//       }
+//     }
+//   }
+  
+//   const observerVideo = new IntersectionObserver(entries => {
+//     entries.forEach(entry => {
+//       if (entry.isIntersecting) {
+//         loadAndPlayVideo(entry.target);
+//         observerVideo.unobserve(entry.target);
+//       }
+//     });
+//   });
+  
+//   const videoElementThird = document.querySelector('.watch__video-el');
+//   const videoElementBg = document.querySelector('.watch__bg-el');
+  
+//   observerVideo.observe(videoElementThird);
+//   observerVideo.observe(videoElementBg);
 
-  // Функция для начала загрузки и воспроизведения видео
+
+//   // КЛИК И ОТКРЫТЬ НА ВЕСЬ ЭКРАН И ВКЛЮЧИТЬ ЗВУК ==================================
+//   const videoElement = document.querySelector('.watch__video-el');
+//   videoElement.addEventListener('click', function() {
+//     if (videoElement.requestFullscreen) {
+//       videoElement.requestFullscreen();
+//     } else if (videoElement.mozRequestFullScreen) {
+//       videoElement.mozRequestFullScreen();
+//     } else if (videoElement.webkitRequestFullscreen) { 
+//       videoElement.webkitRequestFullscreen();
+//     } else if (videoElement.msRequestFullscreen) {
+//       videoElement.msRequestFullscreen();
+//     }
+//     videoElement.muted = false;
+//   });
+// });
+
+document.addEventListener("DOMContentLoaded", function() {
   function loadAndPlayVideo(video) {
     const sources = video.querySelectorAll('source');
     const isLandscape = window.innerWidth > window.innerHeight;
@@ -83,32 +136,53 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     });
     video.load();
-    const dataSrc = video.getAttribute('data-src');
-    if (dataSrc) {
-      video.setAttribute('src', dataSrc);
-      video.load();
-      if (video.classList.contains('watch__bg-el')) {
-        video.play();
+    // const dataSrc = video.getAttribute('data-src');
+    // if (dataSrc) {
+    //   video.setAttribute('src', dataSrc);
+    //   video.load();
+    //   if (video.classList.contains('watch__bg-el')) {
+    //     video.play();
+    //   }
+    // }
+
+    // Обработчик клика для переключения в полноэкранный режим и включения звука
+    video.addEventListener('click', function() {
+      if (video.requestFullscreen) {
+        video.requestFullscreen();
+      } else if (video.mozRequestFullScreen) {
+        video.mozRequestFullScreen();
+      } else if (video.webkitRequestFullscreen) {
+        video.webkitRequestFullscreen();
+      } else if (video.msRequestFullscreen) {
+        video.msRequestFullscreen();
       }
-    }
+      video.muted = false;
+    });
   }
-  
+
   const observerVideo = new IntersectionObserver(entries => {
     entries.forEach(entry => {
-      // Если видео появилось во вьюпорте, начинаем его загрузку и воспроизведение
       if (entry.isIntersecting) {
         loadAndPlayVideo(entry.target);
-        // Отключаем наблюдение после начала загрузки и воспроизведения
         observerVideo.unobserve(entry.target);
       }
     });
   });
-  
-  // Получаем элементы видео
+
   const videoElementThird = document.querySelector('.watch__video-el');
-  const videoElementBg = document.querySelector('.watch__bg-el');
-  
-  // Начинаем наблюдение за элементами видео
+  // const videoElementBg = document.querySelector('.watch__bg-el');
+
   observerVideo.observe(videoElementThird);
-  observerVideo.observe(videoElementBg);
+  // observerVideo.observe(videoElementBg);
+});
+
+
+document.addEventListener('DOMContentLoaded', (event) => {
+  var video = document.querySelector('.watch__bg-el');
+  function playVideo() {
+      if (video.paused) {
+          video.play();
+      }
+  }
+  document.addEventListener('click', playVideo);
 });

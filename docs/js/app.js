@@ -173,12 +173,10 @@
                 if (isLandscape && source.classList.contains("watch-pc")) source.setAttribute("src", source.getAttribute("data-src")); else if (!isLandscape && source.classList.contains("watch-mob")) source.setAttribute("src", source.getAttribute("data-src"));
             }));
             video.load();
-            const dataSrc = video.getAttribute("data-src");
-            if (dataSrc) {
-                video.setAttribute("src", dataSrc);
-                video.load();
-                if (video.classList.contains("watch__bg-el")) video.play();
-            }
+            video.addEventListener("click", (function() {
+                if (video.requestFullscreen) video.requestFullscreen(); else if (video.mozRequestFullScreen) video.mozRequestFullScreen(); else if (video.webkitRequestFullscreen) video.webkitRequestFullscreen(); else if (video.msRequestFullscreen) video.msRequestFullscreen();
+                video.muted = false;
+            }));
         }
         const observerVideo = new IntersectionObserver((entries => {
             entries.forEach((entry => {
@@ -189,9 +187,14 @@
             }));
         }));
         const videoElementThird = document.querySelector(".watch__video-el");
-        const videoElementBg = document.querySelector(".watch__bg-el");
         observerVideo.observe(videoElementThird);
-        observerVideo.observe(videoElementBg);
+    }));
+    document.addEventListener("DOMContentLoaded", (event => {
+        var video = document.querySelector(".watch__bg-el");
+        function playVideo() {
+            if (video.paused) video.play();
+        }
+        document.addEventListener("click", playVideo);
     }));
     window["FLS"] = false;
     isWebp();

@@ -316,12 +316,14 @@ section {
 	// .watch__video-wr
 	&__video-wr {
     width: fit-content;
-    background-color: #000;
 	}
   // .watch__video-el
   &__video-el {
     // aspect-ratio: 1920/1080;
     height: 73vh;
+    @media (min-width:$mobileSmall){
+      background-color: #000;
+    }
   }
   // .watch__footer
   &__footer {

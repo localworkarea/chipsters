@@ -248,8 +248,7 @@ section {
 .watch__video-wr {
   width: -webkit-fit-content;
   width: -moz-fit-content;
-  width: fit-content;
-  background-color: #000
+  width: fit-content
 }
 .watch__video-el {
   height: 73vh
@@ -290,6 +289,11 @@ section {
   transition: -webkit-transform .3s;
   transition: transform .3s;
   transition: transform .3s,-webkit-transform .3s
+}
+@media (min-width:29.99875em) {
+  .watch__video-el {
+    background-color: #000
+  }
 }
 @media (min-width:53.18625em) {
   .item-packs {
